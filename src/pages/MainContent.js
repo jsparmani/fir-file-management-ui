@@ -3,6 +3,7 @@ import {Layout} from "antd";
 import {HashRouter as Router, Route, Switch} from "react-router-dom";
 import Login from "../components/Login";
 import Root from "../components/Root";
+import RegisterFIR from "../components/RegisterFIR";
 const {Content} = Layout;
 
 export default class Main extends Component {
@@ -20,6 +21,9 @@ export default class Main extends Component {
                         <Switch>
                             <Route path="/login">
                                 <Login />
+                            </Route>
+                            <Route path="/register-fir">
+                                <RegisterFIR />
                             </Route>
                             <Route path="/">
                                 <Root />

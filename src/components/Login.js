@@ -1,13 +1,24 @@
 import React from "react";
-import {Form, Icon, Input, Button, Checkbox} from "antd";
+import {Form, Icon, Input, Button} from "antd";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 
 class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log("Received values of form: ", values);
+                axios.post("/user/token/", values).then(res => {
+                    console.log(res.data);
+                });
             }
+        });
+    };
+
+    onChange = e => {
+        this.props.form.setFieldsValue({
+            [e.target.name]: e.target.value
         });
     };
 
@@ -16,11 +27,11 @@ class Login extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
-                    {getFieldDecorator("username", {
+                    {getFieldDecorator("email", {
                         rules: [
                             {
                                 required: true,
-                                message: "Please input your username!"
+                                message: "Please input your email!"
                             }
                         ]
                     })(
@@ -31,7 +42,9 @@ class Login extends React.Component {
                                     style={{color: "rgba(0,0,0,.25)"}}
                                 />
                             }
-                            placeholder="Username"
+                            placeholder="Email"
+                            name="email"
+                            onChange={this.onChange}
                         />
                     )}
                 </Form.Item>
@@ -53,6 +66,8 @@ class Login extends React.Component {
                             }
                             type="password"
                             placeholder="Password"
+                            name="password"
+                            onChange={this.onChange}
                         />
                     )}
                 </Form.Item>
