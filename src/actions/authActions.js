@@ -14,7 +14,6 @@ export const loginUser = (email, password) => async dispatch => {
     axios
         .post("/user/token/", {email, password})
         .then(res => {
-            console.log(res.data);
             loginUserSuccess(dispatch, res.data.token);
         })
 

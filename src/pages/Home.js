@@ -3,6 +3,7 @@ import {Layout} from "antd";
 import Navbar from "../components/Navbar";
 import MainContent from "./MainContent";
 import {connect} from "react-redux";
+import {logoutUser} from "../actions";
 const {Footer} = Layout;
 
 class Home extends Component {
@@ -13,6 +14,7 @@ class Home extends Component {
             this.props.ps_id,
             this.props.dist_id
         );
+        // this.props.logoutUser();
     }
 
     render() {
@@ -37,4 +39,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {logoutUser})(Home);
