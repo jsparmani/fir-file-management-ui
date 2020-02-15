@@ -1,17 +1,14 @@
 import React from "react";
 import {Form, Icon, Input, Button} from "antd";
-import axios from "axios";
-
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+import {loginUser} from "../actions";
+import {connect} from "react-redux";
 
 class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                axios.post("/user/token/", values).then(res => {
-                    console.log(res.data);
-                });
+                this.props.loginUser(values.email, values.password);
             }
         });
     };
@@ -95,4 +92,4 @@ class Login extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({name: "login"})(Login);
 
-export default WrappedNormalLoginForm;
+export default connect(null, {loginUser})(WrappedNormalLoginForm);

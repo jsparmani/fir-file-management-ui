@@ -2,9 +2,19 @@ import React, {Component} from "react";
 import {Layout} from "antd";
 import Navbar from "../components/Navbar";
 import MainContent from "./MainContent";
+import {connect} from "react-redux";
 const {Footer} = Layout;
 
-export default class Home extends Component {
+class Home extends Component {
+    componentDidMount() {
+        console.log(
+            this.props.token,
+            this.props.user_id,
+            this.props.ps_id,
+            this.props.dist_id
+        );
+    }
+
     render() {
         return (
             <div>
@@ -17,3 +27,14 @@ export default class Home extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        user_id: state.auth.user_id,
+        ps_id: state.auth.ps_id,
+        dist_id: state.auth.dist_id
+    };
+};
+
+export default connect(mapStateToProps)(Home);
