@@ -1,6 +1,9 @@
 import React, {Component} from "react";
-import {Menu, Icon} from "antd";
+import {Menu} from "antd";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {logoutUser} from "../../actions";
+
 class RightMenu extends Component {
     render() {
         return (
@@ -8,8 +11,17 @@ class RightMenu extends Component {
                 <Menu.Item key="login">
                     <Link to="/login">Login</Link>
                 </Menu.Item>
+                <Menu.Item key="logout">
+                    <Link
+                        onClick={() => {
+                            this.props.logoutUser();
+                        }}
+                    >
+                        Logout
+                    </Link>
+                </Menu.Item>
             </Menu>
         );
     }
 }
-export default RightMenu;
+export default connect(null, {logoutUser})(RightMenu);

@@ -1,9 +1,14 @@
 import React from "react";
 
-import {Form, Input, Select, Button, InputNumber} from "antd";
+import {Form, Input, Select, Button, InputNumber, DatePicker} from "antd";
+
+import axios from "axios";
+
+import {connect} from "react-redux";
 
 const {Option} = Select;
 
+axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 class RegisterFIR extends React.Component {
     state = {
         confirmDirty: false,
@@ -14,9 +19,57 @@ class RegisterFIR extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
+
+        let self = this;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log("Received values of form: ", values);
+                axios
+                    .post("/tracking/firs/", {
+                        fir_no: values.fir_no,
+                        police_station: self.props.ps,
+                        investigation_officer: values.investigation_officer,
+                        accused_name: values.accused_name,
+                        accused_status: values.accused_status,
+                        challan_to_court_limitation_period:
+                            values.challan_to_court_limitation_period
+                    })
+                    .then(res => {
+                        // console.log(values.date);
+
+                        if (values.date) {
+                            axios
+                                .post("/tracking/fir-status/", {
+                                    fir: res.data.id,
+                                    current_status: values.current_status,
+                                    location: values.current_location,
+                                    date_of_action: values.date.format(
+                                        "YYYY-MM-DD"
+                                    ),
+                                    is_active: true
+                                })
+                                .then(res => {
+                                    console.log(res.data);
+                                });
+                        } else {
+                            let current_datetime = new Date();
+                            axios
+                                .post("/tracking/fir-status/", {
+                                    fir: res.data.id,
+                                    current_status: values.current_status,
+                                    location: values.current_location,
+                                    date_of_action:
+                                        current_datetime.getFullYear() +
+                                        "-" +
+                                        (current_datetime.getMonth() + 1) +
+                                        "-" +
+                                        current_datetime.getDate(),
+                                    is_active: true
+                                })
+                                .then(res => {
+                                    console.log(res.data);
+                                });
+                        }
+                    });
             }
         });
     };
@@ -27,6 +80,26 @@ class RegisterFIR extends React.Component {
                 value
             }
         });
+    };
+
+    renderDate = getFieldDecorator => {
+        if (
+            this.props.form.getFieldValue("current_status") !=
+            "under_investigation"
+        ) {
+            return (
+                <Form.Item label="Select Date">
+                    {getFieldDecorator("date", {
+                        rules: [
+                            {
+                                required: false,
+                                message: "Please select the date!"
+                            }
+                        ]
+                    })(<DatePicker placeholder="Select Date" />)}
+                </Form.Item>
+            );
+        }
     };
 
     render() {
@@ -136,6 +209,68 @@ class RegisterFIR extends React.Component {
                     )}
                 </Form.Item>
 
+                <Form.Item label="Current Status">
+                    {getFieldDecorator("current_status", {
+                        rules: [
+                            {
+                                required: true,
+                                message: "Please select current status!"
+                            }
+                        ]
+                    })(
+                        <Select
+                            showSearch
+                            placeholder="Select current status"
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                option.props.children
+                                    .toLowerCase()
+                                    .indexOf(input.toLowerCase()) >= 0
+                            }
+                        >
+                            <Option value="under_investigation">
+                                Under Investigation
+                            </Option>
+                            <Option value="challan_filed">Challan Filed</Option>
+                            <Option value="untraced">Untraced</Option>
+                            <Option value="cancelled">Cancelled</Option>
+                        </Select>
+                    )}
+                </Form.Item>
+
+                <Form.Item label="Current Location of FIR">
+                    {getFieldDecorator("current_location", {
+                        rules: [
+                            {
+                                required: false,
+                                message: "Please select current status!"
+                            }
+                        ]
+                    })(
+                        <Select
+                            showSearch
+                            placeholder="Select current location of FIR"
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                option.props.children
+                                    .toLowerCase()
+                                    .indexOf(input.toLowerCase()) >= 0
+                            }
+                        >
+                            <Option value="under_investigation">
+                                Under Investigation
+                            </Option>
+                            <Option value="ps">Police Station</Option>
+                            <Option value="dsp">DSP Office</Option>
+                            <Option value="sp">SP Office</Option>
+                            <Option value="ssp">SSP Office</Option>
+                            <Option value="court">Court</Option>
+                        </Select>
+                    )}
+                </Form.Item>
+
+                {this.renderDate(getFieldDecorator)}
+
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
                         Submit
@@ -148,4 +283,10 @@ class RegisterFIR extends React.Component {
 
 const WrappedRegistrationForm = Form.create({name: "register"})(RegisterFIR);
 
-export default WrappedRegistrationForm;
+const mapStateToProps = state => {
+    return {
+        ps: state.auth.ps_id
+    };
+};
+
+export default connect(mapStateToProps)(WrappedRegistrationForm);
