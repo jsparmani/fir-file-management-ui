@@ -4,6 +4,8 @@ import {HashRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import Login from "../components/Login";
 import Root from "../components/Root";
 import RegisterFIR from "../components/RegisterFIR";
+import StatusFIR from "../components/StatusFIR";
+import ChangeStatusFIR from "../components/ChangeStatusFIR";
 import {connect} from "react-redux";
 const {Content} = Layout;
 
@@ -43,6 +45,16 @@ class Main extends Component {
                             <PrivateRoute
                                 path="/register-fir"
                                 component={RegisterFIR}
+                                authed={this.props.token}
+                            />
+                            <PrivateRoute
+                                path="/status-fir"
+                                component={StatusFIR}
+                                authed={this.props.token}
+                            />
+                            <PrivateRoute
+                                path="/change-status"
+                                component={ChangeStatusFIR}
                                 authed={this.props.token}
                             />
                             <Route path="/">

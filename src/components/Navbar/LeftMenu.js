@@ -12,6 +12,9 @@ class LeftMenu extends Component {
                     <Menu.Item key="register_fir">
                         <Link to="/register-fir">Add FIR</Link>
                     </Menu.Item>
+                    <Menu.Item key="status_fir">
+                        <Link to="/status-fir">FIR Status</Link>
+                    </Menu.Item>
                 </Menu>
             </div>
         );

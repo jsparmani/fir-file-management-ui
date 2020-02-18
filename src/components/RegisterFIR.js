@@ -257,9 +257,6 @@ class RegisterFIR extends React.Component {
                                     .indexOf(input.toLowerCase()) >= 0
                             }
                         >
-                            <Option value="under_investigation">
-                                Under Investigation
-                            </Option>
                             <Option value="ps">Police Station</Option>
                             <Option value="dsp">DSP Office</Option>
                             <Option value="sp">SP Office</Option>
