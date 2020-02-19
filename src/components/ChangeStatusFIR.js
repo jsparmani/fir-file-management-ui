@@ -1,5 +1,13 @@
 import React from "react";
-import {Form, Input, Select, Button, InputNumber, DatePicker} from "antd";
+import {
+    Form,
+    Input,
+    Select,
+    Button,
+    InputNumber,
+    DatePicker,
+    message
+} from "antd";
 import axios from "axios";
 import {connect} from "react-redux";
 
@@ -25,7 +33,15 @@ class ChangeStatusFIR extends React.Component {
                         date_of_action: values.date.format("YYYY-MM-DD"),
                         is_active: true
                     })
-                    .then(res => console.log(res.data));
+                    .then(() => {
+                        message.success("Status Updated", 2.5);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        message.error(
+                            "There seems to be an issue! Please try again!"
+                        );
+                    });
             }
         });
     };

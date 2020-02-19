@@ -1,6 +1,14 @@
 import React from "react";
 
-import {Form, Input, Select, Button, InputNumber, DatePicker} from "antd";
+import {
+    Form,
+    Input,
+    Select,
+    Button,
+    InputNumber,
+    DatePicker,
+    message
+} from "antd";
 
 import axios from "axios";
 
@@ -23,6 +31,7 @@ class RegisterFIR extends React.Component {
         let self = this;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                // message.loading("In Progress..", 2.5);
                 axios
                     .post("/tracking/firs/", {
                         fir_no: values.fir_no,
@@ -48,7 +57,17 @@ class RegisterFIR extends React.Component {
                                     is_active: true
                                 })
                                 .then(res => {
-                                    console.log(res.data);
+                                    message.success(
+                                        "Successfully Registered..",
+                                        2.5
+                                    );
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    message.error(
+                                        "There seems to be some issue! Please try again",
+                                        2.5
+                                    );
                                 });
                         } else {
                             let current_datetime = new Date();
@@ -66,9 +85,26 @@ class RegisterFIR extends React.Component {
                                     is_active: true
                                 })
                                 .then(res => {
-                                    console.log(res.data);
+                                    message.success(
+                                        "Successfully Registered..",
+                                        2.5
+                                    );
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    message.error(
+                                        "There seems to be some issue! Please try again",
+                                        2.5
+                                    );
                                 });
                         }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        message.error(
+                            "There seems to be some issue! Please try again",
+                            2.5
+                        );
                     });
             }
         });
