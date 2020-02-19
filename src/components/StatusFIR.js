@@ -2,7 +2,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import axios from "axios";
-import {List, Card} from "antd";
+import {List, Card, Skeleton} from "antd";
 import {Link} from "react-router-dom";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
@@ -10,12 +10,13 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 class StatusFIR extends React.Component {
     state = {
         firs: [],
-        loading: false
+        loading: true
     };
 
     fetchFIRs = () => {
+        this.setState({loading: true});
         axios.get(`/tracking/firs/?ps=${this.props.ps}`).then(res => {
-            this.setState({firs: res.data});
+            this.setState({firs: res.data, loading: false});
         });
     };
 
@@ -27,17 +28,15 @@ class StatusFIR extends React.Component {
         this.fetchFIRs();
     }
 
-    sendRequest = () => {
-        this.setState({loading: true});
-        setTimeout(() => {
-            this.setState({loading: false});
-        }, 2000);
-    };
-
     render() {
+        if (this.state.loading) {
+            return <Skeleton active />;
+        }
+
         return (
             <div>
                 <h2 align="center">FIR Status</h2>
+
                 <List
                     grid={{
                         gutter: 16,

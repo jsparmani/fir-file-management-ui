@@ -9,7 +9,7 @@ const {Footer} = Layout;
 class Home extends Component {
     render() {
         return (
-            <div>
+            <div style={{flex: 1}}>
                 <Navbar />
                 <MainContent />
                 <Footer style={{textAlign: "center"}}>

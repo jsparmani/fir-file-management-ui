@@ -35,7 +35,7 @@ class Main extends Component {
                         style={{
                             background: "#fff",
                             padding: 24,
-                            minHeight: "65vh"
+                            minHeight: "75vh"
                         }}
                     >
                         <Switch>

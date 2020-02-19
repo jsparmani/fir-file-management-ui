@@ -12,10 +12,26 @@ const INITIAL_STATE = {
     isLoggedIn: false,
     dist_id: null,
     user_id: null,
-    ps_id: null
+    ps_id: null,
+    leftRoutes: [
+        {
+            key: "home",
+            to: "/",
+            display: "Home"
+        }
+    ],
+    rightRoutes: [
+        {
+            key: "login",
+            to: "/login",
+            display: "Login"
+        }
+    ]
 };
 
 export default (state = INITIAL_STATE, action) => {
+    console.log(action);
+
     switch (action.type) {
         case LOGIN_USER:
             return {
@@ -30,12 +46,50 @@ export default (state = INITIAL_STATE, action) => {
                 ps_id: action.payload[2],
                 dist_id: action.payload[3],
                 loading: false,
-                isLoggedIn: true
+                isLoggedIn: true,
+                leftRoutes: [
+                    {
+                        key: "home",
+                        to: "/",
+                        display: "Home"
+                    },
+                    {
+                        key: "register_fir",
+                        to: "/register-fir",
+                        display: "Add FIR"
+                    },
+                    {
+                        key: "status_fir",
+                        to: "/status-fir",
+                        display: "FIR Status"
+                    }
+                ],
+                rightRoutes: [
+                    {
+                        key: "logout",
+                        to: "/",
+                        display: "Logout"
+                    }
+                ]
             };
         case LOGIN_USER_FAIL:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                leftRoutes: [
+                    {
+                        key: "home",
+                        to: "/",
+                        display: "Home"
+                    }
+                ],
+                rightRoutes: [
+                    {
+                        key: "login",
+                        to: "/login",
+                        display: "Login"
+                    }
+                ]
             };
         case LOGOUT_USER:
             return {

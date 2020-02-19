@@ -8,21 +8,37 @@ class RightMenu extends Component {
     render() {
         return (
             <Menu mode={this.props.mode}>
-                <Menu.Item key="login">
-                    <Link to="/login">Login</Link>
-                </Menu.Item>
-                <Menu.Item key="logout">
-                    <Link
-                        to="/"
-                        onClick={() => {
-                            this.props.logoutUser(this.props);
-                        }}
-                    >
-                        Logout
-                    </Link>
-                </Menu.Item>
+                {this.props.routes.map(item => {
+                    if (item.key === "logout") {
+                        return (
+                            <Menu.Item key={item.key}>
+                                <Link
+                                    to={item.to}
+                                    onClick={event => {
+                                        event.preventDefault();
+                                        this.props.logoutUser(this.props);
+                                    }}
+                                >
+                                    {item.display}
+                                </Link>
+                            </Menu.Item>
+                        );
+                    }
+                    return (
+                        <Menu.Item key={item.key}>
+                            <Link to={item.to}>{item.display}</Link>
+                        </Menu.Item>
+                    );
+                })}
             </Menu>
         );
     }
 }
-export default withRouter(connect(null, {logoutUser})(RightMenu));
+
+const mapStateToProps = state => {
+    return {
+        routes: state.auth.rightRoutes
+    };
+};
+
+export default withRouter(connect(mapStateToProps, {logoutUser})(RightMenu));
