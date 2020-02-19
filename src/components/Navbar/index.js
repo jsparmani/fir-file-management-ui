@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
 import {Drawer, Button} from "antd";
-import {HashRouter as Router, Link} from "react-router-dom";
+import {HashRouter as Router} from "react-router-dom";
 
 class Navbar extends Component {
     state = {
@@ -24,14 +24,14 @@ class Navbar extends Component {
             <Router>
                 <nav className="menuBar">
                     <div className="logo">
-                        <a href="">File Tracking</a>
+                        <a href="/#">File Tracking</a>
                     </div>
                     <div className="menuCon">
                         <div className="leftMenu">
-                            <LeftMenu />
+                            <LeftMenu mode="horizontal" />
                         </div>
                         <div className="rightMenu">
-                            <RightMenu />
+                            <RightMenu mode="horizontal" />
                         </div>
                         <Button
                             className="barsMenu"
@@ -46,12 +46,10 @@ class Navbar extends Component {
                             closable={true}
                             onClose={this.onClose}
                             visible={this.state.visible}
-                            width="300"
+                            width="240px"
                         >
-                            <p>
-                                <LeftMenu />
-                                <RightMenu />
-                            </p>
+                            <LeftMenu mode="inline" />
+                            <RightMenu mode="inline" />
                         </Drawer>
                     </div>
                 </nav>

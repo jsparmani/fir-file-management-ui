@@ -2,10 +2,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import axios from "axios";
-import {Typography, List, Card} from "antd";
-import {Link, Redirect} from "react-router-dom";
-
-const {Title} = Typography;
+import {List, Card} from "antd";
+import {Link} from "react-router-dom";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 
@@ -39,7 +37,7 @@ class StatusFIR extends React.Component {
     render() {
         return (
             <div>
-                <Title align="center">FIR Status</Title>
+                <h2 align="center">FIR Status</h2>
                 <List
                     grid={{
                         gutter: 16,

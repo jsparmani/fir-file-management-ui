@@ -43,8 +43,6 @@ class RegisterFIR extends React.Component {
                             values.challan_to_court_limitation_period
                     })
                     .then(res => {
-                        // console.log(values.date);
-
                         if (values.date) {
                             axios
                                 .post("/tracking/fir-status/", {
@@ -120,7 +118,7 @@ class RegisterFIR extends React.Component {
 
     renderDate = getFieldDecorator => {
         if (
-            this.props.form.getFieldValue("current_status") !=
+            this.props.form.getFieldValue("current_status") !==
             "under_investigation"
         ) {
             return (

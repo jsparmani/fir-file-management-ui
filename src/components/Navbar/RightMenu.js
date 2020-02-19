@@ -7,12 +7,13 @@ import {logoutUser} from "../../actions";
 class RightMenu extends Component {
     render() {
         return (
-            <Menu mode="horizontal">
+            <Menu mode={this.props.mode}>
                 <Menu.Item key="login">
                     <Link to="/login">Login</Link>
                 </Menu.Item>
                 <Menu.Item key="logout">
                     <Link
+                        to="/"
                         onClick={() => {
                             this.props.logoutUser(this.props);
                         }}

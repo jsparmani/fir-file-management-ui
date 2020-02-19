@@ -1,13 +1,5 @@
 import React from "react";
-import {
-    Form,
-    Input,
-    Select,
-    Button,
-    InputNumber,
-    DatePicker,
-    message
-} from "antd";
+import {Form, Input, Select, Button, DatePicker, message} from "antd";
 import axios from "axios";
 import {connect} from "react-redux";
 
@@ -24,7 +16,6 @@ class ChangeStatusFIR extends React.Component {
 
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log(values, this.props.location.state.fir_id);
                 axios
                     .post("/tracking/fir-status/", {
                         fir: this.props.location.state.fir_id,

@@ -7,16 +7,6 @@ import {logoutUser} from "../actions";
 const {Footer} = Layout;
 
 class Home extends Component {
-    componentDidMount() {
-        console.log(
-            this.props.token,
-            this.props.user_id,
-            this.props.ps_id,
-            this.props.dist_id
-        );
-        // this.props.logoutUser();
-    }
-
     render() {
         return (
             <div>
