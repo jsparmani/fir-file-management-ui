@@ -2,13 +2,14 @@ import React from "react";
 import {Form, Icon, Input, Button} from "antd";
 import {loginUser} from "../actions";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 
 class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.loginUser(values.email, values.password);
+                this.props.loginUser(values.email, values.password, this.props);
             }
         });
     };
@@ -92,4 +93,4 @@ class Login extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({name: "login"})(Login);
 
-export default connect(null, {loginUser})(WrappedNormalLoginForm);
+export default withRouter(connect(null, {loginUser})(WrappedNormalLoginForm));

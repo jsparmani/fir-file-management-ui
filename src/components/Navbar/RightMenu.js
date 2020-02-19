@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Menu} from "antd";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {logoutUser} from "../../actions";
 
@@ -14,7 +14,7 @@ class RightMenu extends Component {
                 <Menu.Item key="logout">
                     <Link
                         onClick={() => {
-                            this.props.logoutUser();
+                            this.props.logoutUser(this.props);
                         }}
                     >
                         Logout
@@ -24,4 +24,4 @@ class RightMenu extends Component {
         );
     }
 }
-export default connect(null, {logoutUser})(RightMenu);
+export default withRouter(connect(null, {logoutUser})(RightMenu));
