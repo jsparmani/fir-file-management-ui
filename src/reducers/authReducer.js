@@ -62,6 +62,11 @@ export default (state = INITIAL_STATE, action) => {
                         key: "status_fir",
                         to: "/status-fir",
                         display: "FIR Status"
+                    },
+                    {
+                        key: "view_fir",
+                        to: "/view-firs",
+                        display: "View FIRs"
                     }
                 ],
                 rightRoutes: [

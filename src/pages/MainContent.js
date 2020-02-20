@@ -6,6 +6,8 @@ import Root from "../components/Root";
 import RegisterFIR from "../components/RegisterFIR";
 import StatusFIR from "../components/StatusFIR";
 import ChangeStatusFIR from "../components/ChangeStatusFIR";
+import ViewFIRs from "../components/ViewFIRs";
+import DetailedFIRStatus from "../components/DetailedFIRStatus";
 import {connect} from "react-redux";
 const {Content} = Layout;
 
@@ -55,6 +57,16 @@ class Main extends Component {
                             <PrivateRoute
                                 path="/change-status"
                                 component={ChangeStatusFIR}
+                                authed={this.props.token}
+                            />
+                            <PrivateRoute
+                                path="/view-firs"
+                                component={ViewFIRs}
+                                authed={this.props.token}
+                            />
+                            <PrivateRoute
+                                path="/detailed-status"
+                                component={DetailedFIRStatus}
                                 authed={this.props.token}
                             />
                             <Route path="/">
