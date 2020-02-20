@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 
 const {Option} = Select;
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+axios.defaults.baseURL = "https://firfiletracking.pythonanywhere.com/api";
 class ChangeStatusFIR extends React.Component {
     state = {
         confirmDirty: false

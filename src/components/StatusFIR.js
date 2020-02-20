@@ -5,7 +5,7 @@ import axios from "axios";
 import {List, Card, Skeleton} from "antd";
 import {Link} from "react-router-dom";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+axios.defaults.baseURL = "https://firfiletracking.pythonanywhere.com/api";
 
 class StatusFIR extends React.Component {
     state = {

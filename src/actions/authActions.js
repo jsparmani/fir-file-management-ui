@@ -8,7 +8,7 @@ import axios from "axios";
 
 import {notification} from "antd";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+axios.defaults.baseURL = "https://firfiletracking.pythonanywhere.com/api";
 
 const openNotificationWithIconLogin = (type, placement) => {
     notification[type]({
